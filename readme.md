@@ -36,7 +36,7 @@ Desenvolver um software que permita o gerenciamento das vacinas aplicadas aos in
 
 ## 👥 Equipe
 
-Este projeto foi desenvolvido pelo **Grupo 7**, composto por:
+Este projeto foi desenvolvido pelo **Grupo 6**, composto por:
 
 - **Lucas Vinícius de Oliveira**
 - **FulAna Carolina Silva**

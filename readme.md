@@ -39,11 +39,11 @@ Desenvolver um software que permita o gerenciamento das vacinas aplicadas aos in
 Este projeto foi desenvolvido pelo **Grupo 7**, composto por:
 
 - **Lucas Vinícius de Oliveira**
-- **Ana Carolina Silva**
-- **Carlos Eduardo Santos**
-- **Fernanda Lima**
-- **João Pedro Almeida**
-- **Mariana Costa**
+- **FulAna Carolina Silva**
+- **Cicrano Eduardo Santos**
+- **BeltranaLima**
+- **Caboclo Almeida**
+- **Sá Costa**
 
 ---
 

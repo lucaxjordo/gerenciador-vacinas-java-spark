@@ -1,9 +1,6 @@
 package br.com.api.routes;
 
-import br.com.api.service.ServicoUsuario;
-import br.com.api.service.ServicoPaciente;
-import br.com.api.service.ServicoVacina;
-import br.com.api.service.ServicoDose;
+import br.com.api.service.*;
 import spark.Spark;
 
 public class Rotas {
@@ -20,6 +17,9 @@ public class Rotas {
 
         // Configuração das rotas de Dose
         configurarRotasDose();
+
+        // Configuração das rotas de Imunizacao
+        configurarRotasImunizacao();
     }
 
     // Método para configurar as rotas de Usuário
@@ -52,4 +52,15 @@ public class Rotas {
     private static void configurarRotasDose() {
         Spark.get("/doses/consultar/:idVacina", ServicoDose.consultarDosesPorVacina());
     }
+
+    private static void configurarRotasImunizacao() {
+        Spark.post("/imunizacao/inserir", ServicoImunizacao.cadastrarImunizacao());
+        Spark.get("/imunizacao/consultar/:id", ServicoImunizacao.consultarImunizacaoPorId());
+        Spark.get("/imunizacao/consultar", ServicoImunizacao.consultarTodasImunizacoes());
+        Spark.put("/imunizacao/alterar/:id", ServicoImunizacao.alterarImunizacao());
+        Spark.delete("/imunizacao/excluir/:id", ServicoImunizacao.excluirImunizacao());
+        Spark.delete("/imunizacao/excluir/paciente/:id", ServicoImunizacao.excluirImunizacoesPorPaciente());
+        Spark.get("/imunizacao/consultar/paciente/:id/aplicacao/:dt_ini/:dt_fim", ServicoImunizacao.consultarImunizacoesPorPacienteEData());
+    }
+
 }

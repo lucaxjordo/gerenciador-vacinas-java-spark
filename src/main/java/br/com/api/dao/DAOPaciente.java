@@ -176,4 +176,15 @@ public class DAOPaciente {
             return qtdeLinhasAlteradas;
         }
     }
+
+    public static boolean pacienteExiste(int idPaciente) throws SQLException {
+        String sql = "SELECT id FROM paciente WHERE id = ?";
+        try (PreparedStatement comando = conexao.prepareStatement(sql)) {
+            comando.setInt(1, idPaciente);
+            try (ResultSet resultado = comando.executeQuery()) {
+                return resultado.next(); // Retorna true se o paciente existir
+            }
+        }
+    }
+
 }

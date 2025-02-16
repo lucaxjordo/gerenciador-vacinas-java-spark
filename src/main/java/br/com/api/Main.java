@@ -1,12 +1,12 @@
 package br.com.api;
 
+import br.com.api.dao.*;
 import spark.Spark;
 
 import java.sql.Connection;
 
 import br.com.api.config.Conexao;
 
-import br.com.api.dao.DAOUsuario;
 import br.com.api.routes.Rotas;
 
 import spark.Request;
@@ -23,6 +23,11 @@ public class Main {
 
             //Atribui a conexao criada, no atributo da classe DAOUsuario
             DAOUsuario.conexao = conexao;
+            DAODose.conexao = conexao;
+            DAOPaciente.conexao = conexao;
+            DAOImunizacao.connection = conexao;
+            DAOVacina.conexao = conexao;
+
             //TO DO: atribuir a mesma conexao nas demais classes DAO caso existam
 
             Spark.port(8080);

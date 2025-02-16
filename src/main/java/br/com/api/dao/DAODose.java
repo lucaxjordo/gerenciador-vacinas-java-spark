@@ -32,4 +32,14 @@ public class DAODose {
         }
         return doses;
     }
+
+    public static boolean doseExiste(int idDose) throws SQLException {
+        String sql = "SELECT id FROM dose WHERE id = ?";
+        try (PreparedStatement comando = conexao.prepareStatement(sql)) {
+            comando.setInt(1, idDose);
+            try (ResultSet resultado = comando.executeQuery()) {
+                return resultado.next(); // Retorna true se a dose existir
+            }
+        }
+    }
 }

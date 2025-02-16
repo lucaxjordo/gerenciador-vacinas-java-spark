@@ -4,107 +4,103 @@ import br.com.api.model.Vacina;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DAOVacina {
     public static Connection conexao;
 
-    // Método para consultar todas as vacinas
-    public static List<Vacina> consultarTodasVacinas() throws Exception {
-        String sql = "SELECT * FROM vacina";
+    // Consultar todas as vacinas
+    public static List<Vacina> consultarTodas() throws SQLException {
         List<Vacina> vacinas = new ArrayList<>();
+        String sql = "SELECT * FROM vacina";
 
-        try (PreparedStatement ps = conexao.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement comando = conexao.prepareStatement(sql);
+             ResultSet resultado = comando.executeQuery()) {
 
-            while (rs.next()) {
+            while (resultado.next()) {
                 Vacina vacina = new Vacina(
-                        rs.getInt("id"),
-                        rs.getString("vacina"),
-                        rs.getString("descricao"),
-                        rs.getInt("limite_aplicacao"),
-                        rs.getString("publico_alvo")
+                        resultado.getInt("id"),
+                        resultado.getString("nome"),
+                        resultado.getString("descricao"),
+                        resultado.getInt("limite_aplicacao"),
+                        resultado.getString("publico_alvo")
                 );
                 vacinas.add(vacina);
             }
         }
-
         return vacinas;
     }
 
-    // Método para consultar vacinas por faixa etária
-    public static List<Vacina> consultarVacinasPorFaixaEtaria(int faixaEtaria) throws Exception {
-        String sql = "SELECT * FROM vacina WHERE (limite_aplicacao IS NULL OR limite_aplicacao >= ?)";
+    // Consultar vacinas por faixa etária
+    public static List<Vacina> consultarPorFaixaEtaria(String faixaEtaria) throws SQLException {
         List<Vacina> vacinas = new ArrayList<>();
+        String sql = "SELECT * FROM vacina WHERE publico_alvo = ?";
 
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setInt(1, faixaEtaria);
+        try (PreparedStatement comando = conexao.prepareStatement(sql)) {
+            comando.setString(1, faixaEtaria);
+            ResultSet resultado = comando.executeQuery();
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Vacina vacina = new Vacina(
-                            rs.getInt("id"),
-                            rs.getString("vacina"),
-                            rs.getString("descricao"),
-                            rs.getInt("limite_aplicacao"),
-                            rs.getString("publico_alvo")
-                    );
-                    vacinas.add(vacina);
-                }
+            while (resultado.next()) {
+                Vacina vacina = new Vacina(
+                        resultado.getInt("id"),
+                        resultado.getString("nome"),
+                        resultado.getString("descricao"),
+                        resultado.getInt("limite_aplicacao"),
+                        resultado.getString("publico_alvo")
+                );
+                vacinas.add(vacina);
             }
         }
-
         return vacinas;
     }
 
-    // Método para consultar vacinas recomendadas acima de uma idade
-    public static List<Vacina> consultarVacinasRecomendadasAcimaDeIdade(int meses) throws Exception {
-        String sql = "SELECT * FROM vacina WHERE limite_aplicacao > ?";
+    // Consultar vacinas recomendadas acima de uma idade
+    public static List<Vacina> consultarPorIdadeMaior(int meses) throws SQLException {
         List<Vacina> vacinas = new ArrayList<>();
+        String sql = "SELECT * FROM vacina WHERE limite_aplicacao IS NULL OR limite_aplicacao > ?";
 
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setInt(1, meses);
+        try (PreparedStatement comando = conexao.prepareStatement(sql)) {
+            comando.setInt(1, meses);
+            ResultSet resultado = comando.executeQuery();
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Vacina vacina = new Vacina(
-                            rs.getInt("id"),
-                            rs.getString("vacina"),
-                            rs.getString("descricao"),
-                            rs.getInt("limite_aplicacao"),
-                            rs.getString("publico_alvo")
-                    );
-                    vacinas.add(vacina);
-                }
+            while (resultado.next()) {
+                Vacina vacina = new Vacina(
+                        resultado.getInt("id"),
+                        resultado.getString("nome"),
+                        resultado.getString("descricao"),
+                        resultado.getInt("limite_aplicacao"),
+                        resultado.getString("publico_alvo")
+                );
+                vacinas.add(vacina);
             }
         }
-
         return vacinas;
     }
 
-    // Método para consultar vacinas não aplicáveis para um paciente
-    public static List<Vacina> consultarVacinasNaoAplicaveis(int idadeMeses) throws Exception {
-        String sql = "SELECT * FROM vacina WHERE limite_aplicacao IS NOT NULL AND limite_aplicacao < ?";
+    // Consultar vacinas não aplicáveis para um paciente
+    public static List<Vacina> consultarNaoAplicaveis(int idPaciente) throws SQLException {
         List<Vacina> vacinas = new ArrayList<>();
+        String sql = "SELECT v.* FROM vacina v " +
+                "WHERE v.limite_aplicacao IS NOT NULL AND v.limite_aplicacao < " +
+                "(SELECT TIMESTAMPDIFF(MONTH, p.data_nascimento, CURDATE()) FROM paciente p WHERE p.id = ?)";
 
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setInt(1, idadeMeses);
+        try (PreparedStatement comando = conexao.prepareStatement(sql)) {
+            comando.setInt(1, idPaciente);
+            ResultSet resultado = comando.executeQuery();
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Vacina vacina = new Vacina(
-                            rs.getInt("id"),
-                            rs.getString("vacina"),
-                            rs.getString("descricao"),
-                            rs.getInt("limite_aplicacao"),
-                            rs.getString("publico_alvo")
-                    );
-                    vacinas.add(vacina);
-                }
+            while (resultado.next()) {
+                Vacina vacina = new Vacina(
+                        resultado.getInt("id"),
+                        resultado.getString("nome"),
+                        resultado.getString("descricao"),
+                        resultado.getInt("limite_aplicacao"),
+                        resultado.getString("publico_alvo")
+                );
+                vacinas.add(vacina);
             }
         }
-
         return vacinas;
     }
 }

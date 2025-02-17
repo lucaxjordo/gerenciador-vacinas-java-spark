@@ -22,7 +22,7 @@ public class DAOVacina {
             while (resultado.next()) {
                 Vacina vacina = new Vacina(
                         resultado.getInt("id"),
-                        resultado.getString("nome"),
+                        resultado.getString("vacina"),
                         resultado.getString("descricao"),
                         resultado.getInt("limite_aplicacao"),
                         resultado.getString("publico_alvo")
@@ -45,7 +45,7 @@ public class DAOVacina {
             while (resultado.next()) {
                 Vacina vacina = new Vacina(
                         resultado.getInt("id"),
-                        resultado.getString("nome"),
+                        resultado.getString("vacina"),
                         resultado.getString("descricao"),
                         resultado.getInt("limite_aplicacao"),
                         resultado.getString("publico_alvo")
@@ -68,7 +68,7 @@ public class DAOVacina {
             while (resultado.next()) {
                 Vacina vacina = new Vacina(
                         resultado.getInt("id"),
-                        resultado.getString("nome"),
+                        resultado.getString("vacina"),
                         resultado.getString("descricao"),
                         resultado.getInt("limite_aplicacao"),
                         resultado.getString("publico_alvo")
@@ -93,7 +93,7 @@ public class DAOVacina {
             while (resultado.next()) {
                 Vacina vacina = new Vacina(
                         resultado.getInt("id"),
-                        resultado.getString("nome"),
+                        resultado.getString("vacina"),
                         resultado.getString("descricao"),
                         resultado.getInt("limite_aplicacao"),
                         resultado.getString("publico_alvo")

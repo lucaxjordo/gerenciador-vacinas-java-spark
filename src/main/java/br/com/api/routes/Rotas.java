@@ -20,6 +20,9 @@ public class Rotas {
 
         // Configuração das rotas de Imunizacao
         configurarRotasImunizacao();
+
+        // Configuração das rotas de Estatisticas
+        configurarRotasEstatisticas();
     }
 
     // Método para configurar as rotas de Usuário
@@ -61,6 +64,15 @@ public class Rotas {
         Spark.delete("/imunizacao/excluir/:id", ServicoImunizacao.excluirImunizacao());
         Spark.delete("/imunizacao/excluir/paciente/:id", ServicoImunizacao.excluirImunizacoesPorPaciente());
         Spark.get("/imunizacao/consultar/paciente/:id/aplicacao/:dt_ini/:dt_fim", ServicoImunizacao.consultarImunizacoesPorPacienteEData());
+    }
+
+    private static void configurarRotasEstatisticas() {
+
+        Spark.get("/estatisticas/imunizacoes/paciente/:id", ServicoEstatisticas.contarVacinasAplicadasPorPaciente());
+        Spark.get("/estatisticas/proximas_imunizacoes/paciente/:id", ServicoEstatisticas.contarVacinasAplicaveisProximoMes());
+        Spark.get("/estatisticas/imunizacoes_atrasadas/paciente/:id", ServicoEstatisticas.contarVacinasAtrasadas());
+        Spark.get("/estatisticas/imunizacoes/idade_maior/:meses", ServicoEstatisticas.contarVacinasAcimaDaIdade());
+        Spark.get("/estatisticas/vacinas/nao_aplicaveis/paciente/:id", ServicoEstatisticas.contarVacinasNaoAplicaveis());
     }
 
 }

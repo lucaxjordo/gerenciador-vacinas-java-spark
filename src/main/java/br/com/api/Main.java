@@ -27,6 +27,7 @@ public class Main {
             DAOPaciente.conexao = conexao;
             DAOImunizacao.connection = conexao;
             DAOVacina.conexao = conexao;
+            DAOEstatisticas.conexao = conexao;
 
             //TO DO: atribuir a mesma conexao nas demais classes DAO caso existam
 

@@ -4,17 +4,17 @@ public class Dose {
     private int id;
     private int idVacina;
     private String dose;
-    private int idadeRecomendadaAplicacao;
+    private int idade_recomendada_aplicacao;
 
 
     public Dose() {}
 
 
-    public Dose(int id, int idVacina, String dose, int idadeRecomendadaAplicacao) {
+    public Dose(int id, int idVacina, String dose, int idade_recomendada_aplicacao) {
         this.id = id;
         this.idVacina = idVacina;
         this.dose = dose;
-        this.idadeRecomendadaAplicacao = idadeRecomendadaAplicacao;
+        this.idade_recomendada_aplicacao = idade_recomendada_aplicacao;
     }
 
     // Getters e Setters
@@ -42,11 +42,11 @@ public class Dose {
         this.dose = dose;
     }
 
-    public int getIdadeRecomendadaAplicacao() {
-        return idadeRecomendadaAplicacao;
+    public int getIdade_recomendada_aplicacao() {
+        return idade_recomendada_aplicacao;
     }
 
-    public void setIdadeRecomendadaAplicacao(int idadeRecomendadaAplicacao) {
-        this.idadeRecomendadaAplicacao = idadeRecomendadaAplicacao;
+    public void setIdade_recomendada_aplicacao(int idade_recomendada_aplicacao) {
+        this.idade_recomendada_aplicacao = idade_recomendada_aplicacao;
     }
 }

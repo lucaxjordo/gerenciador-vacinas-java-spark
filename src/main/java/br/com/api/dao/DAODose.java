@@ -42,4 +42,27 @@ public class DAODose {
             }
         }
     }
+
+    // Método que busca no banco de dados todas as doses recomendadas para uma determinada idade (em meses).
+    public static List<Dose> consultarPorIdadeRecomendada(int idadeMeses) throws SQLException {
+        List<Dose> doses = new ArrayList<>();
+        String sql = "SELECT * FROM dose WHERE idade_recomendada_aplicacao = ?";
+
+        try (PreparedStatement comando = conexao.prepareStatement(sql)) {
+            comando.setInt(1, idadeMeses);
+            ResultSet resultado = comando.executeQuery();
+
+            while (resultado.next()) {
+                Dose dose = new Dose(
+                        resultado.getInt("id"),
+                        resultado.getInt("id_vacina"),
+                        resultado.getString("dose"),
+                        resultado.getInt("idade_recomendada_aplicacao")
+                );
+                doses.add(dose);
+            }
+        }
+        return doses;
+    }
+
 }

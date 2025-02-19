@@ -36,16 +36,17 @@ public class Rotas {
 
     // Método para configurar as rotas de Paciente
     private static void configurarRotasPaciente() {
-        Spark.post("/paciente/cadastrar", ServicoPaciente.cadastrarPaciente());
-        Spark.get("/paciente/consultar/:id", ServicoPaciente.consultarPacientePorId());
-        Spark.get("/paciente/consultar", ServicoPaciente.consultarTodosPacientes());
-        Spark.put("/paciente/alterar/:id", ServicoPaciente.alterarPaciente());
+        Spark.post("/paciente/inserir", ServicoPaciente.cadastrarPaciente());
+        Spark.put("/paciente/atualizar/:id", ServicoPaciente.atualizarPaciente());
         Spark.delete("/paciente/excluir/:id", ServicoPaciente.excluirPaciente());
+        Spark.get("/paciente/consultar", ServicoPaciente.consultarTodosPacientes());
+        Spark.get("/paciente/consultar/:id", ServicoPaciente.consultarPacientePorId());
+
     }
 
     // Método para configurar as rotas de Vacina
     private static void configurarRotasVacina() {
-        Spark.get("/vacinas/consultar", ServicoVacina.consultarTodasVacinas());
+                Spark.get("/vacinas/consultar", ServicoVacina.consultarTodasVacinas());
         Spark.get("/vacinas/consultar/faixa_etaria/:faixa", ServicoVacina.consultarPorFaixaEtaria());
         Spark.get("/vacinas/consultar/idade_maior/:meses", ServicoVacina.consultarPorIdadeMaior());
         Spark.get("/vacinas/consultar/nao_aplicaveis/paciente/:id", ServicoVacina.consultarNaoAplicaveis());
@@ -54,6 +55,7 @@ public class Rotas {
     // Método para configurar as rotas de Dose
     private static void configurarRotasDose() {
         Spark.get("/doses/consultar/:idVacina", ServicoDose.consultarDosesPorVacina());
+        Spark.get("/doses/consultar/idade/:idadeMeses", ServicoDose.consultarDosesPorIdade());
     }
 
     private static void configurarRotasImunizacao() {

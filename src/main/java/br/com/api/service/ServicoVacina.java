@@ -14,7 +14,7 @@ public class ServicoVacina {
 
     // Lista de faixas etárias permitidas
     private static final List<String> FAIXAS_ETARIAS_PERMITIDAS = Arrays.asList(
-            "CRIANÇA", "ADOLESCENTE", "ADULTO", "GESTANTE"
+            "CRIANCA", "ADOLESCENTE", "ADULTO", "GESTANTE"
     );
 
     // Método para lidar com a rota de consultar todas as vacinas
@@ -42,7 +42,7 @@ public class ServicoVacina {
                 // Valida se a faixa etária informada é permitida
                 if (!FAIXAS_ETARIAS_PERMITIDAS.contains(faixaEtaria)) {
                     response.status(400); // Bad Request
-                    return "{\"message\": \"Faixa etária inválida. As faixas permitidas são: CRIANÇA, ADOLESCENTE, ADULTO, GESTANTE.\"}";
+                    return "{\"message\": \"Faixa etária inválida. As faixas permitidas são: CRIANCA, CRIANCA, ADOLESCENTE, ADULTO, GESTANTE.\"}";
                 }
 
                 // Consulta as vacinas para a faixa etária informada

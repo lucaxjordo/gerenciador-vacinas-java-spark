@@ -30,10 +30,10 @@ public class ServicoPaciente {
                 // Converte a String para LocalDate
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate dataNascimento = LocalDate.parse(request.queryParams("dataNascimento"), formatter);
+                LocalDate Data_nascimento = LocalDate.parse(request.queryParams("data_nascimento"), formatter);
 
                 //executa o metodo de adicionar o contato no array list
-                Paciente paciente = new Paciente(nome, cpf, sexo, dataNascimento);
+                Paciente paciente = new Paciente(nome, cpf, sexo, Data_nascimento);
 
                 try {
                     //passa o objeto para o DAO realizar a insercao no banco de dados
@@ -124,12 +124,13 @@ public class ServicoPaciente {
     }
 
     // Método para lidar com a rota de atualizar paciente
-    public static Route alterarPaciente() {
+    public static Route atualizarPaciente() {
         return new Route() {
             @Override
             public Object handle(Request request, Response response) throws Exception {
                 try {
                     //extrai os parametros do boddy da requisicao http
+
                     int id = Integer.parseInt(request.params(":id"));
                     String nome = request.queryParams("nome");
                     String cpf = request.queryParams("cpf");
@@ -138,20 +139,21 @@ public class ServicoPaciente {
                     // Converte a String para LocalDate
 
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    LocalDate dataNascimento = LocalDate.parse(request.queryParams("dataNascimento"), formatter);
+                    LocalDate Data_nascimento = LocalDate.parse(request.queryParams("data_nascimento"), formatter);
+
 
                     //cria o objeto paciente na memoria
-                    Paciente paciente = new Paciente(id, nome, cpf, sexo, dataNascimento);
+                    Paciente paciente = new Paciente(id, nome, cpf, sexo, Data_nascimento);
 
                     //envia o objeto para ser inserido no banco de dados pelo DAO
                     //e armazena a quantidade de linhas alteradas
                     int qtdeLinhasAlteradas = DAOPaciente.atualizarPaciente(paciente);
 
-                    //se a quantidade de linhas alteradas for maior que 0 significa se existia o usuario no banco de dados
+                    //se a quantidade de linhas alteradas for maior que 0 significa se existia o paciente no banco de dados
                     if (qtdeLinhasAlteradas > 0){
                         response.status(200); // 200 Ok
                         return "{\"message\": \"Paciente com id " + id + " foi atualizado com sucesso.\"}";
-                        //se nao for maior que 0 nao existia o usuario no banco de dados
+                        //se nao for maior que 0 nao existia o paciente no banco de dados
                     } else {
                         response.status(209); // 404 Not Found
                         return "{\"message\": \"O paciente com id " + id + " não foi encontrado.\"}";
@@ -180,11 +182,11 @@ public class ServicoPaciente {
                     //envia o id a ser excluida para o DAO e recebe a quantidade de linhas excluidas
                     int linhasExcluidas = DAOPaciente.excluirPorID(id);
 
-                    //se a quantidade de linhas for maior que 0 significa que o usuario existia no banco de dados
+                    //se a quantidade de linhas for maior que 0 significa que o paciente existia no banco de dados
                     if (linhasExcluidas > 0) {
                         response.status(200); //exclusão com sucesso
                         return "{\"message\": \"Paciente com id " + id + " foi excluído com sucesso.\"}" ;
-                        //se nao forma maior que 0 o usuario nao existia no banco de dados
+                        //se nao forma maior que 0 o paciente nao existia no banco de dados
                     } else {
                         response.status(209); //id não encontrado
                         return "{\"message\": \"Paciente com id " + id + " foi encontrado no banco de dados.\"}" ;
@@ -199,3 +201,4 @@ public class ServicoPaciente {
     }
 
 }
+

@@ -7,23 +7,23 @@ public class Paciente {
     private String nome;
     private String cpf;
     private String sexo;
-    private LocalDate dataNascimento;
+    private LocalDate data_nascimento;
 
     //Construtor para consulta de Paciente com ID
-    public Paciente(int id, String nome, String cpf, String sexo, LocalDate dataNascimento) {
+    public Paciente(int id, String nome, String cpf, String sexo, LocalDate data_nascimento) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.sexo = sexo;
-        this.dataNascimento = dataNascimento;
+        this.data_nascimento = data_nascimento;
     }
 
     //Construtor para consulta de Paciente sem ID
-    public Paciente( String nome, String cpf, String sexo, LocalDate dataNascimento) {
+    public Paciente( String nome, String cpf, String sexo, LocalDate data_nascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.sexo = sexo;
-        this.dataNascimento = dataNascimento;
+        this.data_nascimento = data_nascimento;
     }
 
     // Getters e Setters
@@ -59,12 +59,14 @@ public class Paciente {
         this.sexo = sexo;
     }
 
-    public LocalDate getDatanascimento() {
-        return dataNascimento;
+    public LocalDate getData_nascimento() {
+        return data_nascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setData_nascimento(LocalDate data_nascimento) {
+        this.data_nascimento = data_nascimento;
     }
 
 }
+
+

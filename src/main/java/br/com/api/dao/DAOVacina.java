@@ -75,6 +75,10 @@ public class DAOVacina {
                 );
                 vacinas.add(vacina);
             }
+
+            if (vacinas.isEmpty()) {
+                throw new SQLException("Nenhuma vacina encontrada para idade maior que " + meses + " meses.");
+            }
         }
         return vacinas;
     }
@@ -100,7 +104,13 @@ public class DAOVacina {
                 );
                 vacinas.add(vacina);
             }
+
+            if (vacinas.isEmpty()) {
+                System.out.println("Nenhuma vacina não aplicável encontrada para o paciente com ID " + idPaciente);
+            }
         }
         return vacinas;
     }
+
+
 }

@@ -21,7 +21,7 @@ public class DAOPaciente {
     //Retorno: Tipo int. Retorna o Id da chave primaria criado no banco de dados
     public static int inserir(Paciente paciente) throws SQLException{
         //Define a consulta sql
-        String sql = "INSERT INTO paciente (nome, cpf, sexo, dataNascimento) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO paciente (nome, cpf, sexo, data_nascimento) VALUES (?, ?, ?, ?)";
 
         //Statement.RETURN_GENERATED_KEYS parametro que diz que o banco de dados deve retornar o id da chave primaria criada
         try(PreparedStatement comando = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -32,7 +32,7 @@ public class DAOPaciente {
             comando.setString(3, paciente.getSexo());
 
             // Converte LocalDate para java.sql.Date
-            LocalDate localDate = paciente.getDatanascimento();
+            LocalDate localDate = paciente.getData_nascimento();
             Date sqlDate = Date.valueOf(localDate); // Converte LocalDate para java.sql.Date
             comando.setDate(4, sqlDate);
 
@@ -58,7 +58,7 @@ public class DAOPaciente {
 
     //Realiza a consulta de todos os pacientes cadastrados na tabela
     //Entrada: Nenhum
-    //Retorno: Tipo ArrayList<Usuario>. Retorna uma lista de objetos Pacientes
+    //Retorno: Tipo ArrayList<Paciente>. Retorna uma lista de objetos Pacientes
     public static ArrayList<Paciente> consultarTodosPacientes() throws SQLException{
         //Cria o array list pra receber os dados dos pacientes que retornarao do banco de dados
         ArrayList<Paciente> lista = new ArrayList<Paciente>();
@@ -79,7 +79,7 @@ public class DAOPaciente {
                         resultado.getString("sexo"),
 
                         //Aqui estamos convertendo o LocalDate para Date
-                        resultado.getDate("dataNascimento").toLocalDate()
+                        resultado.getDate("data_nascimento").toLocalDate()
 
                 );
 
@@ -93,8 +93,8 @@ public class DAOPaciente {
     }
 
     //Realiza a consulta de um paciente pelo ID
-    //Entrada: Tipo int. ID do usuario a ser pesquisado
-    //Retorno: Tipo Usuario. Retorna o objeto Usuario
+    //Entrada: Tipo int. ID do paciente a ser pesquisado
+    //Retorno: Tipo Paciente. Retorna o objeto Paciente
     public static Paciente consultarPorID(int id) throws SQLException{
         //Inicia o objeto pessoa como null
         Paciente pessoa = null;
@@ -119,7 +119,7 @@ public class DAOPaciente {
                         resultado.getString("sexo"),
 
                         //Aqui estamos convertendo o LocalDate para Date
-                        resultado.getDate("dataNascimento").toLocalDate()
+                        resultado.getDate("data_nascimento").toLocalDate()
                 );
             }
 
@@ -149,11 +149,11 @@ public class DAOPaciente {
     }
 
     //Atualiza um paciente pelo ID
-    //Entrada: Tipo Paciente. Ojbeto usuario a ser atualizado
+    //Entrada: Tipo Paciente. Ojbeto paciente a ser atualizado
     //Retorno: Tipo int. Retorna a quatidade de linhas excluidas
     public static int atualizarPaciente(Paciente paciente) throws SQLException{
         //Define o sql
-        String sql = "UPDATE paciente SET nome = ?, cpf = ?, sexo = ?, dataNascimento = ? WHERE id = ?";
+        String sql = "UPDATE paciente SET nome = ?, cpf = ?, sexo = ?, data_nascimento = ? WHERE id = ?";
 
         try (PreparedStatement comando = conexao.prepareStatement(sql)) { //cria a conexao para receber o sql dinamico
             //Substitui as ? pelos valores de nome, cpf, sexo, dataNascimento e id
@@ -163,7 +163,7 @@ public class DAOPaciente {
 
 
             // Converte LocalDate para java.sql.Date
-            LocalDate localDate = paciente.getDatanascimento();
+            LocalDate localDate = paciente.getData_nascimento();
             Date sqlDate = Date.valueOf(localDate); // Converte LocalDate para java.sql.Date
             comando.setDate(4, sqlDate);
 
@@ -178,13 +178,25 @@ public class DAOPaciente {
     }
 
     public static boolean pacienteExiste(int idPaciente) throws SQLException {
-        String sql = "SELECT id FROM paciente WHERE id = ?";
+        // Define a consulta SQL para verificar se o paciente existe
+        String sql = "SELECT COUNT(*) AS total FROM paciente WHERE id = ?";
+
         try (PreparedStatement comando = conexao.prepareStatement(sql)) {
+            // Define o parâmetro da consulta (ID do paciente)
             comando.setInt(1, idPaciente);
+
+            // Executa a consulta
             try (ResultSet resultado = comando.executeQuery()) {
-                return resultado.next(); // Retorna true se o paciente existir
+                // Verifica se há algum resultado
+                if (resultado.next()) {
+                    // Se o total for maior que 0, o paciente existe
+                    return resultado.getInt("total") > 0;
+                }
             }
         }
-    }
 
+        // Se não houver resultados, o paciente não existe
+        return false;
+    }
 }
+

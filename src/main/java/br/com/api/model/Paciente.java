@@ -1,4 +1,7 @@
 package br.com.api.model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.sql.Date;
 import java.time.LocalDate;
 
 
@@ -7,10 +10,10 @@ public class Paciente {
     private String nome;
     private String cpf;
     private String sexo;
-    private LocalDate data_nascimento;
+    private Date data_nascimento;
 
     //Construtor para consulta de Paciente com ID
-    public Paciente(int id, String nome, String cpf, String sexo, LocalDate data_nascimento) {
+    public Paciente(int id, String nome, String cpf, String sexo, Date data_nascimento) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -19,7 +22,7 @@ public class Paciente {
     }
 
     //Construtor para consulta de Paciente sem ID
-    public Paciente( String nome, String cpf, String sexo, LocalDate data_nascimento) {
+    public Paciente( String nome, String cpf, String sexo, Date data_nascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.sexo = sexo;
@@ -59,11 +62,11 @@ public class Paciente {
         this.sexo = sexo;
     }
 
-    public LocalDate getData_nascimento() {
+    public Date getData_nascimento() {
         return data_nascimento;
     }
 
-    public void setData_nascimento(LocalDate data_nascimento) {
+    public void setData_nascimento(Date data_nascimento) {
         this.data_nascimento = data_nascimento;
     }
 

@@ -1,5 +1,6 @@
 package br.com.api.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class ServicoPaciente {
                 // Converte a String para LocalDate
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate Data_nascimento = LocalDate.parse(request.queryParams("data_nascimento"), formatter);
+                Date Data_nascimento = Date.valueOf(request.queryParams("data_nascimento"));
 
                 //executa o metodo de adicionar o contato no array list
                 Paciente paciente = new Paciente(nome, cpf, sexo, Data_nascimento);
@@ -138,8 +139,8 @@ public class ServicoPaciente {
 
                     // Converte a String para LocalDate
 
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    LocalDate Data_nascimento = LocalDate.parse(request.queryParams("data_nascimento"), formatter);
+
+                    Date Data_nascimento = Date.valueOf(request.queryParams("data_nascimento"));
 
 
                     //cria o objeto paciente na memoria

@@ -32,9 +32,9 @@ public class DAOPaciente {
             comando.setString(3, paciente.getSexo());
 
             // Converte LocalDate para java.sql.Date
-            LocalDate localDate = paciente.getData_nascimento();
-            Date sqlDate = Date.valueOf(localDate); // Converte LocalDate para java.sql.Date
-            comando.setDate(4, sqlDate);
+            Date localDate = paciente.getData_nascimento();
+
+            comando.setDate(4, localDate);
 
             //Envia o sql para o banco de dados
             comando.executeUpdate();
@@ -59,36 +59,29 @@ public class DAOPaciente {
     //Realiza a consulta de todos os pacientes cadastrados na tabela
     //Entrada: Nenhum
     //Retorno: Tipo ArrayList<Paciente>. Retorna uma lista de objetos Pacientes
-    public static ArrayList<Paciente> consultarTodosPacientes() throws SQLException{
-        //Cria o array list pra receber os dados dos pacientes que retornarao do banco de dados
+    public static ArrayList<Paciente> consultarTodosPacientes() throws SQLException {
         ArrayList<Paciente> lista = new ArrayList<Paciente>();
 
-        //Define o sql de consulta
-        String sql = "SELECT * FROM paciente";
+        // Certifique-se de incluir o campo "id" na consulta SQL
+        String sql = "SELECT id, nome, cpf, sexo, data_nascimento FROM paciente";
 
-        try (   Statement comando = conexao.createStatement(); //Cria o comando
-                ResultSet resultado = comando.executeQuery(sql); //Executa a consulta
-        ) {
+        try (Statement comando = conexao.createStatement();
+             ResultSet resultado = comando.executeQuery(sql)) {
 
-            //Para cada registro retornado do banco de dados
-            while(resultado.next()){
-                //Cria um novo objeto Paciente
+            while (resultado.next()) {
+                // Use o construtor que inclui o ID
                 Paciente novoPaciente = new Paciente(
+                        resultado.getInt("id"), // Adiciona o ID aqui
                         resultado.getString("nome"),
                         resultado.getString("cpf"),
                         resultado.getString("sexo"),
-
-                        //Aqui estamos convertendo o LocalDate para Date
-                        resultado.getDate("data_nascimento").toLocalDate()
-
+                        resultado.getDate("data_nascimento")
                 );
 
-                //Adiciona o objeto paciente array list
                 lista.add(novoPaciente);
             }
         }
 
-        //Retorna o array list de objetos paciente
         return lista;
     }
 
@@ -119,7 +112,7 @@ public class DAOPaciente {
                         resultado.getString("sexo"),
 
                         //Aqui estamos convertendo o LocalDate para Date
-                        resultado.getDate("data_nascimento").toLocalDate()
+                        resultado.getDate("data_nascimento")
                 );
             }
 
@@ -163,9 +156,8 @@ public class DAOPaciente {
 
 
             // Converte LocalDate para java.sql.Date
-            LocalDate localDate = paciente.getData_nascimento();
-            Date sqlDate = Date.valueOf(localDate); // Converte LocalDate para java.sql.Date
-            comando.setDate(4, sqlDate);
+            Date localDate = paciente.getData_nascimento();
+            comando.setDate(4, localDate);
 
             comando.setInt(5, paciente.getId());
 

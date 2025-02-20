@@ -63,6 +63,8 @@ public class Main {
                 }
             });
 
+
+
             //executa o metodo para cadastrar as rotas no spark
             Rotas.processarRotas();
         } catch (Exception e) {

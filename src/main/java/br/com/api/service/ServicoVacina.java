@@ -1,6 +1,7 @@
 package br.com.api.service;
 
 import br.com.api.dao.DAOVacina;
+import br.com.api.dto.DTOVacina;
 import br.com.api.model.Vacina;
 import spark.Request;
 import spark.Response;
@@ -22,7 +23,7 @@ public class ServicoVacina {
         return (Request request, Response response) -> {
             ObjectMapper mapper = new ObjectMapper();
             try {
-                List<Vacina> vacinas = DAOVacina.consultarTodas();
+                List<DTOVacina> vacinas = DAOVacina.consultarTodasComDoses();
                 response.status(200); // OK
                 return mapper.writeValueAsString(vacinas);
             } catch (SQLException e) {

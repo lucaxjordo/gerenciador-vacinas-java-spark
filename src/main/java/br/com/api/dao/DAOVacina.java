@@ -1,33 +1,61 @@
 package br.com.api.dao;
 
+import br.com.api.dto.DTODose;
+import br.com.api.dto.DTOVacina;
 import br.com.api.model.Vacina;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DAOVacina {
     public static Connection conexao;
 
-    // Consultar todas as vacinas
-    public static List<Vacina> consultarTodas() throws SQLException {
-        List<Vacina> vacinas = new ArrayList<>();
-        String sql = "SELECT * FROM vacina";
+    // -- consultar todas as vacinas com suas doses
+    public static List<DTOVacina> consultarTodasComDoses() throws SQLException {
+        List<DTOVacina> vacinas = new ArrayList<>();
+        Map<Integer, DTOVacina> vacinaMap = new HashMap<>(); // Para agrupar vacinas e doses
+
+        String sql = "SELECT v.id AS vacina_id, v.vacina, v.descricao, v.limite_aplicacao, v.publico_alvo, " +
+                "d.id AS dose_id, d.dose, d.idade_recomendada_aplicacao " +
+                "FROM vacina v " +
+                "LEFT JOIN dose d ON v.id = d.id_vacina";
 
         try (PreparedStatement comando = conexao.prepareStatement(sql);
              ResultSet resultado = comando.executeQuery()) {
 
             while (resultado.next()) {
-                Vacina vacina = new Vacina(
-                        resultado.getInt("id"),
-                        resultado.getString("vacina"),
-                        resultado.getString("descricao"),
-                        resultado.getInt("limite_aplicacao"),
-                        resultado.getString("publico_alvo")
-                );
-                vacinas.add(vacina);
+                int vacinaId = resultado.getInt("vacina_id");
+
+                // Verifica se a vacina já foi adicionada ao mapa
+                DTOVacina vacina = vacinaMap.get(vacinaId);
+                if (vacina == null) {
+                    // Cria uma nova vacina
+                    vacina = new DTOVacina(
+                            vacinaId,
+                            resultado.getString("vacina"),
+                            resultado.getString("descricao"),
+                            resultado.getInt("limite_aplicacao"),
+                            resultado.getString("publico_alvo"),
+                            new ArrayList<>()
+                    );
+                    vacinaMap.put(vacinaId, vacina);
+                    vacinas.add(vacina);
+                }
+
+                // Adiciona a dose à vacina
+                if (resultado.getInt("dose_id") != 0) { // Verifica se há uma dose associada
+                    DTODose dose = new DTODose(
+                            resultado.getInt("dose_id"),
+                            resultado.getString("dose"),
+                            resultado.getInt("idade_recomendada_aplicacao")
+                    );
+                    vacina.getDoses().add(dose);
+                }
             }
         }
         return vacinas;

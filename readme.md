@@ -22,6 +22,7 @@ Desenvolver um software que permita o gerenciamento das vacinas aplicadas aos in
 - **Spark**: Framework para criar APIs RESTful.
 - **MySQL**: Banco de dados para persistência dos dados.
 - **Maven**: Gerenciador de dependências.
+- **Postman**: Ferramenta para testar e validar requisições de APIs.
 
 ---
 
@@ -38,18 +39,19 @@ Desenvolver um software que permita o gerenciamento das vacinas aplicadas aos in
 
 Este projeto foi desenvolvido pelo **Grupo 6**, composto por:
 
-- **Lucas Vinícius de Oliveira**
-- **FulAna Carolina Silva**
-- **Cicrano Eduardo Santos**
-- **BeltranaLima**
-- **Caboclo Almeida**
-- **Sá Costa**
+- **Ariel Pires de Pula**
+- **Gabriel de Oliveira Medeiros**
+- **Gustavo Farias Tavares**
+- **Lucas Vinicius de Oliveira**
+- **Raoni Dutra Cunha**
+- **Renata Santos Celestino**
+- **Vinicius Borges de Araújo**
 
 ---
 
 ## 📜 Sobre o Programa
 
-Este projeto foi desenvolvido durante o programa **1000Devs**, promovido pela **Mesttra** em parceria com a **Johnson & Johnson** e o **Hospital Israelita Albert Einstein**. O programa tem como objetivo capacitar desenvolvedores para criar soluções inovadoras na área da saúde.
+Este projeto foi desenvolvido durante o programa **1000Devs**, promovido pela **Mesttra** em parceria com a **Johnson & Johnson** e o **Hospital Israelita Albert Einstein**. 
 
 ---
 

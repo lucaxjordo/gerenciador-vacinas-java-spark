@@ -35,6 +35,58 @@ Desenvolver um software que permita o gerenciamento das vacinas aplicadas aos in
 
 ---
 
+## 🖥️ Como Baixar e Executar o Projeto
+
+### 📌 Requisitos
+
+Antes de rodar o projeto, certifique-se de ter os seguintes requisitos instalados:
+- **Java 11+**
+- **Maven 3+**
+- **MySQL 8+**
+- **Git**
+
+### 📥 1. Clonar o Repositório
+
+```sh
+# Clone o repositório
+git clone https://github.com/lucaxjordo/gerenciador-vacinas-java-spark.git
+
+# Acesse o diretório do projeto
+cd src/main
+```
+
+### 📦 2. Configurar o Banco de Dados
+
+1. Instale o MySQL e crie um banco de dados usando o MySQL Workbench chamado api.
+2. Execute o script SQL disponível em `scrip_sql_criacao_banco.txt` em um Query no Workbench para criar as tabelas.
+3. Configure a conexão no arquivo `src/main/java/br/com/api/config/Conexao.java`, alterando os valores conforme necessário:
+
+```java
+public class Conexao {
+    private static final String URL = "jdbc:mysql://localhost:3306/api";
+    private static final String USUARIO = "<seu_usuario>";
+    private static final String SENHA = "<sua_senha>";
+}
+```
+
+### 🚀 3. Compilar e Executar o Projeto
+
+1. Compile o projeto:
+
+```sh
+mvn clean install
+```
+
+2. Execute a aplicação:
+
+```sh
+mvn exec:java
+```
+
+A API estará disponível em: [http://localhost:3000](http://localhost:3000)
+
+---
+
 ## 🔗 Endpoints da API
 
 ### 🏥 Paciente

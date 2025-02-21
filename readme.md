@@ -35,6 +35,97 @@ Desenvolver um software que permita o gerenciamento das vacinas aplicadas aos in
 
 ---
 
+## 🔗 Endpoints da API
+
+### 🏥 Paciente
+
+| Método   | Rota                      | Descrição                                                 |
+| -------- | ------------------------- | --------------------------------------------------------- |
+| `POST`   | `/paciente/inserir`       | Adiciona um novo paciente. Retorna ID do paciente criado. |
+| `PUT`    | `/paciente/alterar/:id`   | Altera dados de um paciente existente.                    |
+| `DELETE` | `/paciente/excluir/:id`   | Exclui um paciente pelo ID.                               |
+| `GET`    | `/paciente/consultar`     | Retorna todos os pacientes cadastrados.                   |
+| `GET`    | `/paciente/consultar/:id` | Retorna os dados de um paciente específico pelo ID.       |
+
+### 💉 Imunizações
+
+| Método   | Rota                                                           | Descrição                                                           |
+| -------- | -------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `POST`   | `/imunizacao/inserir`                                          | Adiciona uma nova imunização. Retorna ID da imunização criada.      |
+| `PUT`    | `/imunizacao/alterar/:id`                                      | Altera os dados de uma imunização existente.                        |
+| `DELETE` | `/imunizacao/excluir/:id`                                      | Exclui uma imunização pelo ID.                                      |
+| `DELETE` | `/imunizacao/excluir/paciente/:id`                             | Exclui todas as imunizações de um paciente específico.              |
+| `GET`    | `/imunizacao/consultar`                                        | Retorna todas as imunizações registradas.                           |
+| `GET`    | `/imunizacao/consultar/:id`                                    | Retorna os dados de uma imunização específica.                      |
+| `GET`    | `/imunizacao/consultar/paciente/:id`                           | Retorna todas as imunizações de um paciente.                        |
+| `GET`    | `/imunizacao/consultar/paciente/:id/aplicacao/:dt_ini/:dt_fim` | Retorna imunizações de um paciente dentro de um período específico. |
+
+### 💊 Vacinas
+
+| Método | Rota                                             | Descrição                                                                         |
+| ------ | ------------------------------------------------ | --------------------------------------------------------------------------------- |
+| `GET`  | `/vacinas/consultar`                             | Retorna todas as vacinas cadastradas.                                             |
+| `GET`  | `/vacinas/consultar/faixa_etaria/:faixa`         | Retorna vacinas recomendadas para uma faixa etária.                               |
+| `GET`  | `/vacinas/consultar/idade_maior/:meses`          | Retorna vacinas recomendadas para idades acima de um determinado número de meses. |
+| `GET`  | `/vacinas/consultar/nao_aplicaveis/paciente/:id` | Retorna vacinas que não são mais aplicáveis a um paciente devido à idade.         |
+
+### 📊 Estatísticas
+
+| Método | Rota                                                | Descrição                                                                   |
+| ------ | --------------------------------------------------- | --------------------------------------------------------------------------- |
+| `GET`  | `/estatisticas/imunizacoes/paciente/:id`            | Retorna a quantidade de vacinas aplicadas em um paciente.                   |
+| `GET`  | `/estatisticas/proximas_imunizacoes/paciente/:id`   | Retorna a quantidade de vacinas aplicáveis no próximo mês para um paciente. |
+| `GET`  | `/estatisticas/imunizacoes_atrasadas/paciente/:id`  | Retorna a quantidade de vacinas atrasadas de um paciente.                   |
+| `GET`  | `/estatisticas/imunizacoes/idade_maior/:meses`      | Retorna a quantidade de vacinas aplicáveis acima de uma determinada idade.  |
+| `GET`  | `/estatisticas/vacinas/nao_aplicaveis/paciente/:id` | Retorna a quantidade de vacinas não aplicáveis devido à idade do paciente.  |
+
+---
+
+## 📜 Exemplo de Resposta JSON
+
+### ✅ Cadastro de Paciente
+
+#### **Requisição**
+
+```json
+{
+  "nome": "Fulano de Tal",
+  "cpf": "111.111.111-11",
+  "sexo": "M",
+  "dataNascimento": "2018-10-10"
+}
+```
+
+#### **Resposta**
+
+```json
+{
+  "id": 1,
+  "mensagem": "Paciente cadastrado com sucesso."
+}
+```
+
+### ✅ Consulta de Imunizações por Paciente
+
+#### **Resposta**
+
+```json
+[
+  {
+    "id": 1,
+    "paciente": "Fulano de Tal",
+    "vacina": "BCG",
+    "dose": "Dose Única",
+    "dataAplicacao": "2018-10-11",
+    "fabricante": "Fiocruz",
+    "lote": "0644",
+    "local": "Hospital Santa Fé",
+    "profissional": "Beltrano de Tal"
+  }
+]
+```
+
+
 ## 👥 Equipe
 
 Este projeto foi desenvolvido pelo **Grupo 6**, composto por:

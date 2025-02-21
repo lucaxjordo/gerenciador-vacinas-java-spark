@@ -25,13 +25,13 @@ public class Main {
             DAOUsuario.conexao = conexao;
             DAODose.conexao = conexao;
             DAOPaciente.conexao = conexao;
-            DAOImunizacao.connection = conexao;
+            DAOImunizacao.conexao = conexao;
             DAOVacina.conexao = conexao;
             DAOEstatisticas.conexao = conexao;
 
             //TO DO: atribuir a mesma conexao nas demais classes DAO caso existam
 
-            Spark.port(8080);
+            Spark.port(3000);
 
             //Habilitar CORS
             //Assista https://www.youtube.com/watch?v=1V1qkh6K8Gg para entender o que é

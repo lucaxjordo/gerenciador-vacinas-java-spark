@@ -100,19 +100,19 @@ public class ServicoImunizacao {
                     // Extrai o ID da URL
                     int id = Integer.parseInt(request.params(":id"));
 
-                    // Busca a imunização pelo ID
-                    DTOImunizacao imunizacao = DAOImunizacao.consultarPorId(id);
+                    // Busca a lista de imunizações pelo ID
+                    List<DTOImunizacao> imunizacoes = DAOImunizacao.consultarPorId(id);
 
-                    if (imunizacao != null) {
+                    if (!imunizacoes.isEmpty()) {
                         // Define o status HTTP 200 (OK)
                         response.status(200);
 
-                        // Retorna a imunização em formato JSON
-                        return mapper.writeValueAsString(imunizacao);
+                        // Retorna a lista de imunizações em formato JSON
+                        return mapper.writeValueAsString(imunizacoes);
                     } else {
                         // Define o status HTTP 404 (Not Found)
                         response.status(404);
-                        return "{\"message\": \"Imunização não encontrada.\"}";
+                        return "{\"message\": \"Nenhuma imunização encontrada para o ID fornecido.\"}";
                     }
                 } catch (NumberFormatException e) {
                     // Em caso de erro de conversão do ID, define o status HTTP 400 (Bad Request)
@@ -126,6 +126,7 @@ public class ServicoImunizacao {
             }
         };
     }
+
 
     // Método para lidar com a rota de consultar todas as imunizações
     public static Route consultarTodasImunizacoes() {
@@ -344,4 +345,40 @@ public class ServicoImunizacao {
             }
         };
     }
+
+    // Método para lidar com a rota de consultar imunizações por paciente
+    public static Route consultarImunizacoesPorPaciente() {
+        return new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    // Extrai o ID do paciente da URL
+                    int idPaciente = Integer.parseInt(request.params(":id"));
+
+                    // Busca as imunizações no banco de dados
+                    List<DTOImunizacao> imunizacoes = DAOImunizacao.consultarPorPaciente(idPaciente);
+
+                    if (imunizacoes.isEmpty()) {
+                        // Define o status HTTP 200 (OK) com mensagem de lista vazia
+                        response.status(200);
+                        return "{\"message\": \"Nenhuma imunização encontrada para o paciente.\"}";
+                    } else {
+                        // Define o status HTTP 200 (OK) e retorna a lista de imunizações em formato JSON
+                        response.status(200);
+                        return mapper.writeValueAsString(imunizacoes);
+                    }
+                } catch (NumberFormatException e) {
+                    // Em caso de erro de conversão do ID, define o status HTTP 400 (Bad Request)
+                    response.status(400);
+                    return "{\"message\": \"ID do paciente está no formato incorreto.\"}";
+                } catch (Exception e) {
+                    // Em caso de erro, define o status HTTP 500 (Internal Server Error)
+                    response.status(500);
+                    return "{\"message\": \"Erro ao consultar imunizações: " + e.getMessage() + "\"}";
+                }
+            }
+        };
+    }
 }
+

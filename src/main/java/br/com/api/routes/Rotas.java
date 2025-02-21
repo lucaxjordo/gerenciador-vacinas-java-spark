@@ -66,6 +66,7 @@ public class Rotas {
         Spark.delete("/imunizacao/excluir/:id", ServicoImunizacao.excluirImunizacao());
         Spark.delete("/imunizacao/excluir/paciente/:id", ServicoImunizacao.excluirImunizacoesPorPaciente());
         Spark.get("/imunizacao/consultar/paciente/:id/aplicacao/:dt_ini/:dt_fim", ServicoImunizacao.consultarImunizacoesPorPacienteEData());
+        Spark.get("/imunizacoes/paciente/:id", ServicoImunizacao.consultarImunizacoesPorPaciente());
     }
 
     private static void configurarRotasEstatisticas() {
@@ -75,6 +76,7 @@ public class Rotas {
         Spark.get("/estatisticas/imunizacoes_atrasadas/paciente/:id", ServicoEstatisticas.contarVacinasAtrasadas());
         Spark.get("/estatisticas/imunizacoes/idade_maior/:meses", ServicoEstatisticas.contarVacinasAcimaDaIdade());
         Spark.get("/estatisticas/vacinas/nao_aplicaveis/paciente/:id", ServicoEstatisticas.contarVacinasNaoAplicaveis());
+
     }
 
 }
